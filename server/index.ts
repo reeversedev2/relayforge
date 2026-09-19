@@ -2,14 +2,6 @@ import "dotenv/config";
 import { fastifyEnv } from "@fastify/env";
 import createApp from "./app/createApp.js";
 
-declare module "fastify" {
-  interface FastifyInstance {
-    config: {
-      PORT: number;
-    };
-  }
-}
-
 const app = createApp();
 
 const fastifySchema = {
