@@ -11,12 +11,13 @@ importers:
       '@fastify/env':
         specifier: ^7.0.0
         version: 7.0.0
-      '@types/node':
-        specifier: ^26.6.2
-        version: 26.6.2
       fastify:
         specifier: ^5.12.5
         version: 5.12.5
+    devDependencies:
+      '@types/node':
+        specifier: ^26.6.2
+        version: 26.6.2
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
