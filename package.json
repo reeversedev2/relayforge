@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "tsx watch ./server/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/server/index.js",
-    "test": "vitest run"
+    "dev": "node ./server/index.ts",
+    "build": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -15,13 +13,9 @@
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
     "@fastify/env": "^7.0.0",
-    "fastify": "^5.12.5"
-  },
-  "devDependencies": {
     "@types/node": "^26.6.2",
-    "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "fastify": "^5.12.5",
+    "typescript": "^7.0.2"
   },
   "type": "module"
 }

@@ -1,14 +1,24 @@
+import Fastify from "fastify";
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./app/createApp.js";
 
-const app = createApp();
+declare module "fastify" {
+  interface FastifyInstance {
+    config: {
+      PORT: number;
+    };
+  }
+}
+
+const fastify = Fastify({
+  logger: true,
+});
 
 const fastifySchema = {
   type: "object",
   required: ["PORT"],
   properties: {
     PORT: {
-      type: "number",
+      type: "string",
       default: 3000,
     },
   },
@@ -19,18 +29,23 @@ const fastifyOptions = {
   schema: fastifySchema,
 };
 
-await app.register(fastifyEnv, fastifyOptions);
+await fastify.register(fastifyEnv, fastifyOptions);
 
-app.ready((err) => {
+fastify.ready((err) => {
   if (err) {
-    app.log.error(err);
+    fastify.log.error(err);
   }
 });
 
-app.listen({ port: app.config.PORT }, (err, address) => {
+fastify.get("/health", (request, reply) => {
+  reply.send({
+    message: "Status is healthy",
+  });
+});
+
+fastify.listen({ port: fastify.config.PORT }, (err, address) => {
   if (err) {
-    app.log.error(err);
-    process.exit(1);
+    fastify.log.error(err);
   }
 
   console.log(`Server is now running at ${address}`);
