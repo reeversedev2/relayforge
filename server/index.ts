@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./factory/createApp.js";
+import createApp from "./createApp.js";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -10,9 +10,7 @@ declare module "fastify" {
   }
 }
 
-const fastify = Fastify({
-  logger: true,
-});
+const app = createApp();
 
 const fastifySchema = {
   type: "object",
@@ -33,7 +31,7 @@ const fastifyOptions = {
   schema: fastifySchema,
 };
 
-await fastify.register(fastifyEnv, fastifyOptions);
+await app.register(fastifyEnv, fastifyOptions);
 
 try {
   await app.listen({ port: app.config.PORT, host: "0.0.0.0" }, (err, address) => {
