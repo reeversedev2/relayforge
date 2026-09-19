@@ -2,14 +2,24 @@ import "dotenv/config";
 import { fastifyEnv } from "@fastify/env";
 import createApp from "./factory/createApp.js";
 
-const app = createApp();
+declare module "fastify" {
+  interface FastifyInstance {
+    config: {
+      PORT: number;
+    };
+  }
+}
+
+const fastify = Fastify({
+  logger: true,
+});
 
 const fastifySchema = {
   type: "object",
   required: ["PORT"],
   properties: {
     PORT: {
-      type: "number",
+      type: "string",
       default: 3000,
     },
     DATABASE_URL: {
@@ -23,7 +33,7 @@ const fastifyOptions = {
   schema: fastifySchema,
 };
 
-await app.register(fastifyEnv, fastifyOptions);
+await fastify.register(fastifyEnv, fastifyOptions);
 
 try {
   await app.listen({ port: app.config.PORT, host: "0.0.0.0" }, (err, address) => {
