@@ -28,7 +28,7 @@ await app.register(fastifyEnv, fastifyOptions);
 await app.register(workflowRouter, { prefix: "/api/workflows" });
 
 try {
-  await app.listen({ port: app.config.PORT }, (err, address) => {
+  await app.listen({ port: app.config.PORT, host: "0.0.0.0" }, (err, address) => {
     console.log(`Server is now running at ${address}`);
   });
 } catch (err) {
