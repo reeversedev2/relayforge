@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node ./server/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node start"
+    "start": "node dist/server/index.js"
   },
   "keywords": [],
   "author": "",
