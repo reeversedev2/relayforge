@@ -1,15 +1,24 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { getAllWorkflows } from "./db.js";
+import { createWorkflow, getAllWorkflows } from "./db.js";
+import type { CreateWorkflowInput } from "./types.js";
 
 export const getAllWorkflowsHandler = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  let data;
-  try {
-    data = await getAllWorkflows();
-  } catch (err) {
-  } finally {
-    return data;
-  }
+  const data = await getAllWorkflows();
+  return data;
+};
+
+export const createWorflowHandler = async (
+  request: FastifyRequest<{ Body: CreateWorkflowInput }>,
+  reply: FastifyReply,
+) => {
+  const { title, description, userId } = request.body;
+  const data = await createWorkflow({
+    title,
+    description,
+    userId,
+  });
+  return data;
 };
