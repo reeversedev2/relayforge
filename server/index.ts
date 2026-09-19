@@ -18,7 +18,7 @@ const fastifySchema = {
   required: ["PORT"],
   properties: {
     PORT: {
-      type: "string",
+      type: "number",
       default: 3000,
     },
   },
