@@ -41,10 +41,13 @@ export const createWorflowHandler = async (
     return;
   }
 
-  const data = await createWorkflow({
+  await createWorkflow({
     title,
     description,
     userId,
   });
-  return data;
+
+  reply.status(201).send({
+    data: "Workflow created successfully!",
+  });
 };
