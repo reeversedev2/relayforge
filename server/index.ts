@@ -1,5 +1,5 @@
-import Fastify from "fastify";
 import { fastifyEnv } from "@fastify/env";
+import createApp from "./createApp.js";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -9,9 +9,7 @@ declare module "fastify" {
   }
 }
 
-const fastify = Fastify({
-  logger: true,
-});
+const app = createApp();
 
 const fastifySchema = {
   type: "object",
@@ -29,23 +27,17 @@ const fastifyOptions = {
   schema: fastifySchema,
 };
 
-await fastify.register(fastifyEnv, fastifyOptions);
+await app.register(fastifyEnv, fastifyOptions);
 
-fastify.ready((err) => {
+app.ready((err) => {
   if (err) {
-    fastify.log.error(err);
+    app.log.error(err);
   }
 });
 
-fastify.get("/health", (request, reply) => {
-  reply.send({
-    message: "Status is healthy",
-  });
-});
-
-fastify.listen({ port: fastify.config.PORT }, (err, address) => {
+app.listen({ port: app.config.PORT }, (err, address) => {
   if (err) {
-    fastify.log.error(err);
+    app.log.error(err);
     process.exit(1);
   }
 
