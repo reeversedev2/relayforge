@@ -1,0 +1,21 @@
+{
+  "name": "relayforge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "node ./server/index.ts",
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "dependencies": {
+    "@fastify/env": "^7.0.0",
+    "@types/node": "^26.6.2",
+    "fastify": "^5.12.5",
+    "typescript": "^7.0.2"
+  },
+  "type": "module"
+}
