@@ -46,6 +46,7 @@ fastify.get("/health", (request, reply) => {
 fastify.listen({ port: fastify.config.PORT }, (err, address) => {
   if (err) {
     fastify.log.error(err);
+    process.exit(1);
   }
 
   console.log(`Server is now running at ${address}`);
