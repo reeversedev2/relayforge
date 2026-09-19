@@ -1,5 +1,6 @@
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./app/createApp.js";
+import createApp from "./factory/createApp.js";
+import { workflowRouter } from "./modules/workflows/router.js";
 
 const app = createApp();
 
@@ -11,6 +12,9 @@ const fastifySchema = {
       type: "number",
       default: 3000,
     },
+    DATABASE_URL: {
+      type: "string",
+    },
   },
 };
 
@@ -20,6 +24,7 @@ const fastifyOptions = {
 };
 
 await app.register(fastifyEnv, fastifyOptions);
+await app.register(workflowRouter, { prefix: "/api/workflows" });
 
 app.ready((err) => {
   if (err) {
