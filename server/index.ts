@@ -1,5 +1,5 @@
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./createApp.js";
+import createApp from "./app/createApp.js";
 
 declare module "fastify" {
   interface FastifyInstance {
