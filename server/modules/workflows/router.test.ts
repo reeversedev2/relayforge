@@ -1,6 +1,5 @@
 import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 import createApp from "../../factory/createApp.js";
-import { workflowRouter } from "./router.js";
 import {
   createWorkflow,
   getWorkflow,
@@ -19,7 +18,6 @@ vi.mock("../users/db.js", () => ({
 }));
 
 const app = createApp();
-await app.register(workflowRouter, { prefix: "/api/workflows" });
 
 const userId = "11111111-1111-4111-8111-111111111111";
 const workflowId = "22222222-2222-4222-8222-222222222222";
