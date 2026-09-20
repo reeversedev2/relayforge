@@ -92,9 +92,9 @@ export const createWorflowHandler = async (
 
   const { title, description, userId } = validation.data;
 
-  const isUser = await findUser(userId);
+  const foundUser = await findUser(userId);
 
-  if (!isUser) {
+  if (!foundUser.length) {
     reply.status(400).send({
       error: "Unable to find a user",
     });
