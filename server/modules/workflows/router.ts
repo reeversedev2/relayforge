@@ -1,7 +1,10 @@
 import type { FastifyInstance } from "fastify";
-import { createWorflowHandler, getAllWorkflowsHandler } from "./handler.js";
+import {
+  createWorflowHandler,
+  getAllWorkflowsByUserIdHandler,
+} from "./handler.js";
 
 export const workflowRouter = (fastify: FastifyInstance) => {
-  fastify.get("/", getAllWorkflowsHandler);
+  fastify.get("/:userId", getAllWorkflowsByUserIdHandler);
   fastify.post("/create", createWorflowHandler);
 };

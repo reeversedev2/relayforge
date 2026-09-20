@@ -1,16 +1,38 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { createWorkflow, getAllWorkflows } from "./db.js";
-import type { CreateWorkflowInput } from "./types.js";
+import { createWorkflow, getWorkflowByUser } from "./db.js";
+import type { CreateWorkflowInput, GetAllWorkflowsByUserId } from "./types.js";
 import { findUser } from "../users/db.js";
 import z from "zod";
 
-export const getAllWorkflowsHandler = async (
-  request: FastifyRequest,
+/**
+ * GET /api/workflows/:userId GetAllWorkflowsByUser
+ * Accepts userId in params
+ */
+
+const GetAllWorkflowsByUserIdSchema = z.object({
+  userId: z.uuid().nonempty(),
+});
+
+export const getAllWorkflowsByUserIdHandler = async (
+  request: FastifyRequest<{ Params: GetAllWorkflowsByUserId }>,
   reply: FastifyReply,
 ) => {
-  const data = await getAllWorkflows();
+  const validation = GetAllWorkflowsByUserIdSchema.safeParse(request.params);
+
+  if (!validation.success) {
+    return reply.status(400).send({
+      error: validation.error.flatten(),
+    });
+  }
+
+  const data = await getWorkflowByUser(validation.data.userId);
   return data;
 };
+
+/**
+ * POST /api/workflows/create CreateWorkflow
+ * Accepts title, description and userId in request body
+ */
 
 const CreateWorkflowSchema = z.object({
   title: z.string().min(1).max(256),
@@ -41,7 +63,7 @@ export const createWorflowHandler = async (
     return;
   }
 
-  await createWorkflow({
+  const createdWorkflow = await createWorkflow({
     title,
     description,
     userId,
@@ -49,5 +71,6 @@ export const createWorflowHandler = async (
 
   reply.status(201).send({
     data: "Workflow created successfully!",
+    workflow: createdWorkflow.rows,
   });
 };
