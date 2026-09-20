@@ -108,7 +108,6 @@ export const createWorflowHandler = async (
   });
 
   reply.status(201).send({
-    data: "Workflow created successfully!",
-    workflow: createdWorkflow.rows,
+    data: createdWorkflow,
   });
 };

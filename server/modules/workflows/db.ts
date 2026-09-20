@@ -16,9 +16,12 @@ export const createWorkflow = async (input: CreateWorkflowInput) => {
     throw new Error("Workflow input data required");
   }
 
-  return await db.insert(workflows).values({
-    title: input.title,
-    description: input.description,
-    owner: input.userId,
-  });
+  return await db
+    .insert(workflows)
+    .values({
+      title: input.title,
+      description: input.description,
+      owner: input.userId,
+    })
+    .returning();
 };
