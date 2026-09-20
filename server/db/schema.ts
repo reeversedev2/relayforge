@@ -34,7 +34,9 @@ export const workflowSteps = pgTable(
     title: varchar("title", { length: 256 }).notNull(),
     description: text("description").notNull(),
     position: integer("position").notNull(),
-    workflowId: uuid("workflow_uuid").notNull(),
+    workflowId: uuid("workflow_uuid")
+      .notNull()
+      .references(() => workflows.id),
     ...timeStamps,
   },
   (table) => [

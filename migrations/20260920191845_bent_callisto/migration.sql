@@ -1,0 +1,1 @@
+ALTER TABLE "workflow_steps" ADD CONSTRAINT "workflow_steps_workflow_uuid_workflows_id_fkey" FOREIGN KEY ("workflow_uuid") REFERENCES "workflows"("id");

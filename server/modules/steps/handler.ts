@@ -29,7 +29,6 @@ export const getWorkflowStepsByWorkflowId = async (
 const CreateWorkflowStep = z.object({
   title: z.string().nonempty(),
   description: z.string().nonempty(),
-  position: z.int().min(1).default(1),
   workflowId: z.uuid().nonempty(),
 });
 
