@@ -1,8 +1,10 @@
 import { sql, type SQL } from "drizzle-orm";
 import {
+  integer,
   pgTable,
   text,
   timestamp,
+  unique,
   uuid,
   varchar,
   type AnyPgColumn,
@@ -24,6 +26,24 @@ export const workflows = pgTable("workflows", {
     .references(() => users.id),
   ...timeStamps,
 });
+
+export const workflowSteps = pgTable(
+  "workflow_steps",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    title: varchar("title", { length: 256 }).notNull(),
+    description: text("description").notNull(),
+    position: integer("position").notNull(),
+    workflowId: uuid("workflow_uuid").notNull(),
+    ...timeStamps,
+  },
+  (table) => [
+    unique("workflow_steps_workflow_position_unique").on(
+      table.workflowId,
+      table.position,
+    ),
+  ],
+);
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
