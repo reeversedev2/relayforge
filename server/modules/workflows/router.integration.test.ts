@@ -55,7 +55,7 @@ describe("workflow routes with PostgreSQL", () => {
     });
 
     expect(getResponse.statusCode).toBe(200);
-    expect(getResponse.json().workflow).toMatchObject(createdWorkflow);
+    expect(getResponse.json().workflow[0]).toMatchObject(createdWorkflow);
 
     const ownerResponse = await app.inject({
       method: "GET",
