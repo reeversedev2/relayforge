@@ -32,7 +32,7 @@ export const getWorkflowById = async (
   const data = await getWorkflow(validation.data.workflowId);
 
   if (!data.length) {
-    return reply.status(400).send({
+    return reply.status(404).send({
       error: "Worlflow not found",
     });
   }
