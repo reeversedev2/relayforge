@@ -1,10 +1,6 @@
 import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 import createApp from "../../factory/createApp.js";
-import {
-  createWorkflow,
-  getWorkflow,
-  getWorkflowByUser,
-} from "./db.js";
+import { createWorkflow, getWorkflow, getWorkflowByUser } from "./db.js";
 import { findUser } from "../users/db.js";
 
 vi.mock("./db.js", () => ({
@@ -61,7 +57,7 @@ describe("GET /api/workflows/:workflowId", () => {
   });
 
   test("returns 404 when the workflow does not exist", async () => {
-    vi.mocked(getWorkflow).mockResolvedValue([]);
+    vi.mocked(getWorkflow).mockResolvedValue();
 
     const response = await app.inject({
       method: "GET",
