@@ -3,6 +3,10 @@ import { lower, users, workflows } from "../../db/schema.js";
 import { db } from "../../factory/createDatabase.js";
 import type { CreateWorkflowInput } from "./types.js";
 
+export const getWorkflow = async (workflowId: string) => {
+  return await db.select().from(workflows).where(eq(workflows.id, workflowId));
+};
+
 export const getWorkflowByUser = async (userId: string) => {
   return await db.select().from(workflows).where(eq(workflows.owner, userId));
 };

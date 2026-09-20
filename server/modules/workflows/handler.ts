@@ -1,11 +1,49 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { createWorkflow, getWorkflowByUser } from "./db.js";
-import type { CreateWorkflowInput, GetAllWorkflowsByUserId } from "./types.js";
+import { createWorkflow, getWorkflow, getWorkflowByUser } from "./db.js";
+import type {
+  CreateWorkflowInput,
+  GetAllWorkflowById,
+  GetAllWorkflowsByUserId,
+} from "./types.js";
 import { findUser } from "../users/db.js";
 import z from "zod";
 
 /**
- * GET /api/workflows/:userId GetAllWorkflowsByUser
+ * GET /api/workflows/:workflowId
+ * Accepts workflowId
+ */
+
+const GetWorkflowById = z.object({
+  workflowId: z.uuid().nonempty(),
+});
+
+export const getWorkflowById = async (
+  request: FastifyRequest<{ Params: GetAllWorkflowById }>,
+  reply: FastifyReply,
+) => {
+  const validation = GetWorkflowById.safeParse(request.params);
+
+  if (!validation.success) {
+    return reply.status(400).send({
+      error: validation.error.flatten(),
+    });
+  }
+
+  const data = await getWorkflow(validation.data.workflowId);
+
+  if (!data.length) {
+    return reply.status(400).send({
+      error: "Worlflow not found",
+    });
+  }
+
+  return reply.status(200).send({
+    workflow: data,
+  });
+};
+
+/**
+ * GET /api/workflows/owner/:userId GetAllWorkflowsByUser
  * Accepts userId in params
  */
 

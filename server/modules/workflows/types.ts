@@ -1,3 +1,7 @@
+export type GetAllWorkflowById = {
+  workflowId: string;
+};
+
 export type GetAllWorkflowsByUserId = {
   userId: string;
 };
