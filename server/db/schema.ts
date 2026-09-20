@@ -19,7 +19,9 @@ export const workflows = pgTable("workflows", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: varchar("title", { length: 256 }).notNull(),
   description: text("description").notNull(),
-  owner: uuid("workflow_owner").references(() => users.id),
+  owner: uuid("workflow_owner")
+    .notNull()
+    .references(() => users.id),
   ...timeStamps,
 });
 

@@ -11,7 +11,7 @@ CREATE TABLE "workflows" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
 	"title" varchar(256) NOT NULL,
 	"description" text NOT NULL,
-	"workflow_owner" uuid,
+	"workflow_owner" uuid NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );
