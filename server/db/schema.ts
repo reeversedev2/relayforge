@@ -1,6 +1,8 @@
 import { sql, type SQL } from "drizzle-orm";
 import {
   integer,
+  jsonb,
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -16,6 +18,12 @@ const timeStamps = {
     .defaultNow()
     .$onUpdate(() => new Date()),
 };
+
+export const workflowStepTypeEnum = pgEnum("workflow_steps_type", [
+  "http_request",
+  "transform",
+  "notify",
+]);
 
 export const workflows = pgTable("workflows", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -34,6 +42,8 @@ export const workflowSteps = pgTable(
     title: varchar("title", { length: 256 }).notNull(),
     description: text("description").notNull(),
     position: integer("position").notNull(),
+    type: workflowStepTypeEnum(),
+    configuration: jsonb("configuration").notNull(),
     workflowId: uuid("workflow_uuid")
       .notNull()
       .references(() => workflows.id),
