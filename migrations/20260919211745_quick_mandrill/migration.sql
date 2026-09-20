@@ -1,1 +1,0 @@
-ALTER TABLE "workflows" RENAME COLUMN "worflow_owner" TO "workflow_owner";

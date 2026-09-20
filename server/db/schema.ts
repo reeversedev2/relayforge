@@ -27,7 +27,7 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   firstName: varchar("first_name", { length: 256 }).notNull(),
   lastName: varchar("last_name", { length: 256 }).notNull(),
-  email: text("email").notNull(),
+  email: text("email").unique().notNull(),
   ...timeStamps,
 });
 

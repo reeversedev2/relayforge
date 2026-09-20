@@ -1,9 +1,9 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "b38ced05-e671-4fa7-aa19-71264d2b6045",
+  "id": "7bfefead-51d3-4498-a5c4-2f268561fbbc",
   "prevIds": [
-    "db25027b-d1ec-4cea-9518-b7f4245a417e"
+    "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
     {
@@ -186,7 +186,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "workflows_worflow_owner_users_id_fkey",
+      "name": "workflows_workflow_owner_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "workflows"
@@ -210,9 +210,18 @@
       "schema": "public",
       "table": "workflows",
       "entityType": "pks"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "email"
+      ],
+      "nullsNotDistinct": false,
+      "name": "users_email_key",
+      "schema": "public",
+      "table": "users",
+      "entityType": "uniques"
     }
   ],
-  "renames": [
-    "public.workflows.worflow_owner->public.workflows.workflow_owner"
-  ]
+  "renames": []
 }
