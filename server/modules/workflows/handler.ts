@@ -31,7 +31,7 @@ export const getWorkflowById = async (
 
   const data = await getWorkflow(validation.data.workflowId);
 
-  if (!data.length) {
+  if (!data) {
     return reply.status(404).send({
       error: "Worlflow not found",
     });
@@ -78,7 +78,7 @@ const CreateWorkflowSchema = z.object({
   userId: z.uuid(),
 });
 
-export const createWorflowHandler = async (
+export const createWorkflowHandler = async (
   request: FastifyRequest<{ Body: CreateWorkflowInput }>,
   reply: FastifyReply,
 ) => {
