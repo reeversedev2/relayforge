@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { workflowSteps } from "../../db/schema.js";
 import { db } from "../../factory/createDatabase.js";
 import type { CreateWorkflowStepInput } from "./types.js";
@@ -7,7 +7,8 @@ export const getStepsByWorkflowId = async (workflowId: string) => {
   return await db
     .select()
     .from(workflowSteps)
-    .where(eq(workflowSteps.workflowId, workflowId));
+    .where(eq(workflowSteps.workflowId, workflowId))
+    .orderBy(asc(workflowSteps.position));
 };
 
 export const insertNewWorkflowStep = async (input: CreateWorkflowStepInput) => {
