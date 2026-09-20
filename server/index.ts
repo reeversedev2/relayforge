@@ -1,5 +1,6 @@
+import "dotenv/config";
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./app/createApp.js";
+import createApp from "./factory/createApp.js";
 
 const app = createApp();
 
@@ -11,6 +12,9 @@ const fastifySchema = {
       type: "number",
       default: 3000,
     },
+    DATABASE_URL: {
+      type: "string",
+    },
   },
 };
 
@@ -21,17 +25,11 @@ const fastifyOptions = {
 
 await app.register(fastifyEnv, fastifyOptions);
 
-app.ready((err) => {
-  if (err) {
-    app.log.error(err);
-  }
-});
-
-app.listen({ port: app.config.PORT }, (err, address) => {
-  if (err) {
-    app.log.error(err);
-    process.exit(1);
-  }
-
-  console.log(`Server is now running at ${address}`);
-});
+try {
+  await app.listen({ port: app.config.PORT, host: "0.0.0.0" }, (err, address) => {
+    console.log(`Server is now running at ${address}`);
+  });
+} catch (err) {
+  app.log.error(err);
+  process.exit(1);
+}
