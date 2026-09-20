@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { fastifyEnv } from "@fastify/env";
-import createApp from "./factory/createApp.js";
+import createApp from "./app/createApp.js";
 
 const app = createApp();
 

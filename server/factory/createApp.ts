@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { workflowRouter } from "../modules/workflows/router.js";
+import { workflowStepsRouter } from "../modules/steps/router.js";
 
 const createApp = () => {
   const app = Fastify({
@@ -13,6 +14,7 @@ const createApp = () => {
   });
 
   app.register(workflowRouter, { prefix: "/api/workflows" });
+  app.register(workflowStepsRouter, { prefix: "/api/workflow-steps" });
 
   return app;
 };
